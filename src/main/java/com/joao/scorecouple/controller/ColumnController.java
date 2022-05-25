@@ -50,7 +50,25 @@ public class ColumnController {
         List<DynamicDto> colunas = repository.findAll(Coluna.class)
                 .stream()
                 .map(coluna -> {
-                    return DynamicDto.of(coluna)
+                    return DynamicDto.of(coluna, false)
+                            .with("id", coluna.getId())
+                            .with("title", coluna.getTitle())
+                            .with("movies", coluna.getMovies()
+                                    .stream()
+                                    .sorted(Comparator.comparing(Movie::getName))
+                                    .collect(Collectors.toList())
+                            );
+                }).collect(Collectors.toList());
+
+        return ResponseEntity.ok(colunas);
+    }
+
+    @GetMapping("{workspaceId}")
+    public ResponseEntity<Object> findAllByWorkspace(@PathVariable(name = "workspaceId") Integer workspaceId) {
+        List<DynamicDto> colunas = repository.findAll(Coluna.class, QColuna.coluna.workspace().id.eq(workspaceId))
+                .stream()
+                .map(coluna -> {
+                    return DynamicDto.of(coluna, false)
                             .with("id", coluna.getId())
                             .with("title", coluna.getTitle())
                             .with("movies", coluna.getMovies()

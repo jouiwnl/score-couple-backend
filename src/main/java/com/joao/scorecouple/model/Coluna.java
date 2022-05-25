@@ -23,4 +23,8 @@ public class Coluna implements DatabaseEntity<Integer> {
 
     @OneToMany(fetch = FetchType.EAGER, mappedBy = "column")
     private List<Movie> movies;
+
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "id_workspaces", referencedColumnName = "id")
+    private Workspace workspace;
 }

@@ -1,9 +1,9 @@
 spring:
   datasource:
     driver-class-name: org.postgresql.Driver
-    url: jdbc:postgresql://localhost:5432/test
+    url: jdbc:postgresql://localhost:5432/scorecouple
     username: postgres
-    password: root
+    password: postgresPW
     hikari:
       minimum-idle: 3
       maximum-pool-size: 5
